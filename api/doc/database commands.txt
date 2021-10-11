@@ -16,3 +16,12 @@ php bin\console make:entity
 
 3 - to create a controller
 php bin\console make:controller
+
+4 - to create a fixtures (example - insert new user)
+php bin\console mak:fixtures
+
+5 - to enconde a password
+php bin\console security:hash-password
+
+6 - to run a fixture on database
+php bin\console doctrine:fixtures:load
