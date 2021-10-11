@@ -1,0 +1,7 @@
+if you are having problemns if the routing using the xampp app, run the commands below
+
+1 - composer config extra.symfony.allow-contrib true
+2 - composer req symfony/apache-pack
+
+If you have problem with the apache-pack installation, run the comand below
+3 - composer recipes:install symfony/apache-pack --force -v

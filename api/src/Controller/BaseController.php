@@ -118,9 +118,7 @@ abstract class BaseController extends AbstractController
         } catch (\InvalidArgumentException $ex) {
             $responseFactory = new ResponseFactory(
                 false,
-                'Resource not found
-                
-                ',
+                'Resource not found',
                 Response::HTTP_NOT_FOUND
             );
             return $responseFactory->getResponse();
