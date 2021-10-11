@@ -6,3 +6,13 @@ php bin\console doctrine:migrations:diff
 
 3 - to execute the migrations
 php bin\console doctrine:migrations:migrate
+
+##### commands referent to command maker #####
+1 - to list options
+php bin\console list maker
+
+2 - to create an entity
+php bin\console make:entity
+
+3 - to create a controller
+php bin\console make:controller
