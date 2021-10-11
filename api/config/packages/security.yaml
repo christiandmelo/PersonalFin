@@ -21,6 +21,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            logout: ~
+            guard:
+                authenticators:
+                    - App\Security\JwtAutenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
