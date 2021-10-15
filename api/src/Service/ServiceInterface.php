@@ -6,5 +6,3 @@ interface ServiceInterface
 {
     public function createEntity(string $json);
 }
-
-?>
