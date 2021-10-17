@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Service;
+namespace App\Helper;
 
-interface ServiceInterface
+interface EntityFactoryInterface
 {
     public function createEntity(string $json);
 }

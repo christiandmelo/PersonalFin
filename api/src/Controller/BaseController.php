@@ -2,128 +2,138 @@
 
 namespace App\Controller;
 
-use App\Service\ServiceInterface;
-use App\Helper\DataExtractorRequest;
-use App\Helper\ResponseFactory;
+use App\Entity\HypermidiaResponse;
+use App\Helper\EntityFactoryInterface;
+use App\Helper\RequestDataExtractor;
 use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class BaseController extends AbstractController
 {
     /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-    /**
      * @var ObjectRepository
      */
     protected $repository;
     /**
-     * @var ServiceInterface
+     * @var EntityFactoryInterface
      */
-    protected $service;
+    protected $entityFactory;
     /**
-     * @var DataExtractorRequest
+     * @var RequestDataExtractor
      */
-    private $dataExtractorRequest;
+    protected $requestDataExtractor;
+    /**
+     * @var CacheItemPoolInterface
+     */
+    private $cache;
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
+        EntityFactoryInterface $entityFactory,
+        RequestDataExtractor $requestDataExtractor,
         ObjectRepository $repository,
-        ServiceInterface $service,
-        DataExtractorRequest $dataExtractorRequest
+        CacheItemPoolInterface $cache,
+        LoggerInterface $logger
     ) {
-        $this->entityManager = $entityManager;
+        $this->entityFactory = $entityFactory;
+        $this->requestDataExtractor = $requestDataExtractor;
         $this->repository = $repository;
-        $this->service = $service;
-        $this->dataExtractorRequest = $dataExtractorRequest;
+        $this->cache = $cache;
+        $this->logger = $logger;
     }
 
     public function new(Request $request): Response
     {
-        $content = $request->getContent();
-        $entity = $this->service->createEntity($content);
+        $entity = $this->entityFactory->createEntity($request->getContent());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($entity);
+        $entityManager->flush();
 
-        $this->entityManager->persist($entity);
-        $this->entityManager->flush();
+        $cacheItem = $this->cache->getItem(
+            $this->cachePrefix() . $entity->getId()
+        );
+        $cacheItem->set($entity);
+        $this->cache->save($cacheItem);
 
-        return new JsonResponse($entity);
+        $this->logger
+            ->notice(
+                'New entity from {entity} added with id: {id}.',
+                [
+                    'entity' => get_class($entity),
+                    'id' => $entity->getId(),
+                ]
+            );
+
+        return $this->json($entity, Response::HTTP_CREATED);
     }
 
-    public function getAll(Request $request)
+    public function getAll(Request $request): Response
     {
-        $filter = $this->dataExtractorRequest->getDataFilter($request);
-        $orderingInformation = $this->dataExtractorRequest->getOrderingData($request);
-        [$currentPage, $itensPerPage] = $this->dataExtractorRequest->getPaginationData($request);
+        try {
+            $filterData = $this->requestDataExtractor->getFilterData($request);
+            $orderData = $this->requestDataExtractor->getOrderData($request);
+            $paginationData = $this->requestDataExtractor->getPaginationData($request);
+            $itemsPerPage = $_ENV['ITEMS_PER_PAGE'] ?? 10;
 
-        $list = $this->repository->findBy(
-            $filter,
-            $orderingInformation,
-            $itensPerPage,
-            ($currentPage - 1) * $itensPerPage
-        );
-        $responseFactory = new ResponseFactory(
-            true,
-            $list,
-            Response::HTTP_OK,
-            $currentPage,
-            $itensPerPage
-        );
-        return $responseFactory->getResponse();
+            $entityList = $this->repository->findBy(
+                $filterData,
+                $orderData,
+                $itemsPerPage,
+                ($paginationData - 1) * $itemsPerPage
+            );
+
+            $hypermidiaResponse = new HypermidiaResponse($entityList, true, Response::HTTP_OK, $paginationData, $itemsPerPage);
+        } catch (\Throwable $erro) {
+            $hypermidiaResponse = HypermidiaResponse::fromError($erro);
+        }
+
+        return $hypermidiaResponse->getResponse();
     }
 
-    public function getOne(int $id): Response
+    public function GetOne(int $id)
     {
-        $entity = $this->repository->find($id);
-        $statusResponse = is_null($entity)
-            ? Response::HTTP_NO_CONTENT
-            : Response::HTTP_OK;
-        $responseFactory = new ResponseFactory(
-            true,
-            $entity,
-            $statusResponse
-        );
+        $entity = $this->cache->hasItem($this->cachePrefix() . $id)
+            ? $this->cache->getItem($this->cachePrefix() . $id)->get()
+            : $this->repository->find($id);
+        $hypermidiaResponse = new HypermidiaResponse($entity, true, Response::HTTP_OK, null);
 
-        return $responseFactory->getResponse();
-    }
-
-    public function remove(int $id): Response
-    {
-        $entity = $this->repository->find($id);
-        $this->entityManager->remove($entity);
-        $this->entityManager->flush();
-
-        return new Response('', Response::HTTP_NO_CONTENT);
+        return $hypermidiaResponse->getResponse();
     }
 
     public function update(int $id, Request $request): Response
     {
-        $content = $request->getContent();
-        $entity = $this->service->createEntity($content);
+        $entity = $this->entityFactory->createEntity($request->getContent());
+        $existingEntity = $this->updateExistingEntity($id, $entity);
 
-        try {
-            $existingEntity = $this->atualizaEntidadeExistente($id, $entity);
-            $this->entityManager->flush();
+        $this->getDoctrine()->getManager()->flush();
 
-            $responseFactory = new ResponseFactory(
-                true,
-                $existingEntity,
-                Response::HTTP_OK
-            );
-            return $responseFactory->getResponse();
-        } catch (\InvalidArgumentException $ex) {
-            $responseFactory = new ResponseFactory(
-                false,
-                'Resource not found',
-                Response::HTTP_NOT_FOUND
-            );
-            return $responseFactory->getResponse();
-        }
+        $cacheItem = $this->cache->getItem($this->cachePrefix() . $id);
+        $cacheItem->set($existingEntity);
+        $this->cache->save($cacheItem);
+
+        return $this->json($existingEntity);
     }
 
-    abstract function atualizaEntidadeExistente(int $id, $entity);
+    public function delete(int $id): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $entity = $this->repository->find($id);
+        $entityManager->remove($entity);
+        $entityManager->flush();
+
+        $this->cache->deleteItem($this->cachePrefix() . $id);
+
+        return new Response('', Response::HTTP_NO_CONTENT);
+    }
+
+    abstract public function updateExistingEntity(int $id, $entity);
+    abstract public function cachePrefix(): string;
 }
