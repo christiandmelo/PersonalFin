@@ -25,3 +25,12 @@ php bin\console security:hash-password
 
 6 - to run a fixture on database
 php bin\console doctrine:fixtures:load
+
+7 - to create database to tests
+php bin\console -e test doctrine:database:create
+
+8 - to create database schema to tests
+php bin\console -e test doctrine:schema:create
+
+6 - to run a fixture on database to tests
+php bin\console -e test doctrine:fixtures:load
