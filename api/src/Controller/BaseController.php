@@ -6,6 +6,7 @@ use App\Entity\HypermidiaResponse;
 use App\Helper\EntityFactoryInterface;
 use App\Helper\RequestDataExtractor;
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository as PersistenceObjectRepository;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +39,7 @@ abstract class BaseController extends AbstractController
     public function __construct(
         EntityFactoryInterface $entityFactory,
         RequestDataExtractor $requestDataExtractor,
-        ObjectRepository $repository,
+        PersistenceObjectRepository $repository,
         CacheItemPoolInterface $cache,
         LoggerInterface $logger
     ) {
