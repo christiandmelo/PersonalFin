@@ -26,7 +26,7 @@
         },
         "responses": {
           "201": {
-            "description": "Sucess",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -38,28 +38,132 @@
         }
       }
     },
-    "/ola": {
+    "/client": {
+      "post": {
+        "summary": "Create new client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientEdit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientQuery"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients": {
       "get": {
-        "summary": "Hello world!",
+        "summary": "Get all clients",
         "responses": {
           "200": {
-            "description": "Sucesso",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "mensagem": {
-                      "type": "string"
+                    "success": {
+                      "type": "boolean"
                     },
-                    "pathInfo": {
-                      "type": "string"
+                    "page": {
+                      "type": "integer"
                     },
-                    "query": {
-                      "type": "string"
+                    "itemsPerPage": {
+                      "type": "integer"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ClientQuery"
+                      }
                     }
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/client/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get client by id",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/ClientQuery"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Edit client",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientEdit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientQuery"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete client",
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "text": {
+                "example": 1
               }
             }
           }
@@ -81,6 +185,37 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "ClientQuery": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "userId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "ClientEdit": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
             "type": "string"
           }
         }

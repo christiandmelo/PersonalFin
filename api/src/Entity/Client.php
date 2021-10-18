@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ClientRepository::class)
  */
-class Client
+class Client implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -89,5 +89,15 @@ class Client
         $this->Active = $Active;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'userId' => $this->getUser()->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail()
+        ];
     }
 }
