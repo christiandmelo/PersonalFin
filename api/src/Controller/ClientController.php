@@ -24,11 +24,11 @@ class ClientController extends BaseController
     public function updateExistingEntity(int $id, $entity)
     {
         /** @var Client $entity */
-        $entity = $this->getDoctrine()->getRepository(Client::class)->find($id);
-        $entity->setName($entity->getName());
-        $entity->setEmail($entity->getEmail());
+        $existingEntity = $this->getDoctrine()->getRepository(Client::class)->find($id);
+        $existingEntity->setName($entity->getName());
+        $existingEntity->setEmail($entity->getEmail());
 
-        return $entity;
+        return $existingEntity;
     }
 
     public function cachePrefix(): string

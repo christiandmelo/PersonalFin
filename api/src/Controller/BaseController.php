@@ -50,31 +50,6 @@ abstract class BaseController extends AbstractController
         $this->logger = $logger;
     }
 
-    public function new(Request $request): Response
-    {
-        $entity = $this->entityFactory->createEntity($request->getContent());
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($entity);
-        $entityManager->flush();
-
-        $cacheItem = $this->cache->getItem(
-            $this->cachePrefix() . $entity->getId()
-        );
-        $cacheItem->set($entity);
-        $this->cache->save($cacheItem);
-
-        $this->logger
-            ->notice(
-                'New entity from {entity} added with id: {id}.',
-                [
-                    'entity' => get_class($entity),
-                    'id' => $entity->getId(),
-                ]
-            );
-
-        return $this->json($entity, Response::HTTP_CREATED);
-    }
-
     public function getAll(Request $request): Response
     {
         try {
@@ -106,6 +81,31 @@ abstract class BaseController extends AbstractController
         $hypermidiaResponse = new HypermidiaResponse($entity, true, Response::HTTP_OK, null);
 
         return $hypermidiaResponse->getResponse();
+    }
+
+    public function new(Request $request): Response
+    {
+        $entity = $this->entityFactory->createEntity($request->getContent());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($entity);
+        $entityManager->flush();
+
+        $cacheItem = $this->cache->getItem(
+            $this->cachePrefix() . $entity->getId()
+        );
+        $cacheItem->set($entity);
+        $this->cache->save($cacheItem);
+
+        $this->logger
+            ->notice(
+                'New entity from {entity} added with id: {id}.',
+                [
+                    'entity' => get_class($entity),
+                    'id' => $entity->getId(),
+                ]
+            );
+
+        return $this->json($entity, Response::HTTP_CREATED);
     }
 
     public function update(int $id, Request $request): Response
