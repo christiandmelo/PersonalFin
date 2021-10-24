@@ -101,6 +101,49 @@ paths:
           content:
             text:
               example: 1
+              
+  /suggestedPayments:
+    get:
+      summary: Get all suggested payment
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  page:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SuggestedPayment"
+  /suggestedPayment/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Get client by id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/SuggestedPayment"
 security: 
 - auth: []
 components:
@@ -132,6 +175,14 @@ components:
         name: 
           type: string
         email:
+          type: string
+    
+    SuggestedPayment:
+      type: object
+      properties:
+        name: 
+          type: string
+        initials: 
           type: string
   securitySchemes:
     auth:

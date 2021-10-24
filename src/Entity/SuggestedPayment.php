@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=SuggestedPaymentRepository::class)
  */
-class SuggestedPayment
+class SuggestedPayment implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -71,5 +71,13 @@ class SuggestedPayment
         $this->Active = $Active;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->getName(),
+            'initials' => $this->getInitials()
+        ];
     }
 }
