@@ -7,7 +7,7 @@ use App\Helper\EntityFactoryInterface;
 
 class SuggestedCategoryService implements EntityFactoryInterface
 {
-    public function createEntity(string $json): SuggestedCategory
+    public function createEntity(string $json, int $userId, bool $insert): SuggestedCategory
     {
         $entity = new SuggestedCategory();
 

@@ -19,13 +19,13 @@ class ClientService implements EntityFactoryInterface
         $this->userRepository = $userRepository;
     }
 
-    public function createEntity(string $json): Client
+    public function createEntity(string $json, int $userId, bool $insert): Client
     {
         $objetoJson = json_decode($json);
         $this->checkAllProperties($objetoJson);
 
         $entity = new Client();
-        $entity->setUser($this->userRepository->find($objetoJson->userId))
+        $entity->setUser($this->userRepository->find($userId))
                ->setName($objetoJson->name)
                ->setEmail($objetoJson->email)
                ->setActive(true);
@@ -35,10 +35,6 @@ class ClientService implements EntityFactoryInterface
 
     private function checkAllProperties(object $objetoJson): void
     {
-        if (!property_exists($objetoJson, 'userId')) {
-            throw new EntityFactoryException('Client needs an user');
-        }
-
         if (!property_exists($objetoJson, 'name')) {
             throw new EntityFactoryException('Client needs a name');
         }
