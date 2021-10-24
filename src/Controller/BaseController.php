@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\HypermidiaResponse;
 use App\Helper\EntityFactoryInterface;
 use App\Helper\RequestDataExtractor;
+use App\Repository\ClientRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\Persistence\ObjectRepository as PersistenceObjectRepository;
 use Psr\Cache\CacheItemPoolInterface;
@@ -85,7 +86,7 @@ abstract class BaseController extends AbstractController
 
     public function new(Request $request): Response
     {
-        $entity = $this->entityFactory->createEntity($request->getContent());
+        $entity = $this->entityFactory->createEntity($request->getContent(), $this->getUser()->getId(), true);
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($entity);
         $entityManager->flush();
@@ -110,7 +111,7 @@ abstract class BaseController extends AbstractController
 
     public function update(int $id, Request $request): Response
     {
-        $entity = $this->entityFactory->createEntity($request->getContent());
+        $entity = $this->entityFactory->createEntity($request->getContent(), $this->getUser()->getId(), false);
         $existingEntity = $this->updateExistingEntity($id, $entity);
 
         $this->getDoctrine()->getManager()->flush();

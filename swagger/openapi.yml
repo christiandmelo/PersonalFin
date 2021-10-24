@@ -187,6 +187,86 @@ paths:
                     type: boolean
                   data:
                     $ref: "#/components/schemas/SuggestedCategory"
+  
+  /payment:
+    post:
+      summary: Create new payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentQuery"
+  /payments:
+    get:
+      summary: Get all payments
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  page:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PaymentQuery"
+  /payment/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Get payment by id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/PaymentQuery"
+    put:
+      summary: Edit payment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentQuery"
+    delete:
+      summary: Delete payment
+      responses:
+        201:
+          description: "Success"
+          content:
+            text:
+              example: 1
 security: 
 - auth: []
 components:
@@ -213,8 +293,6 @@ components:
     ClientEdit:
       type: object
       properties:
-        userId:
-          type: integer
         name: 
           type: string
         email:
@@ -233,6 +311,23 @@ components:
         shortName: 
           type: string
         name: 
+          type: string
+          
+    PaymentQuery:
+      type: object
+      properties:
+        id:
+          type: integer
+        name: 
+          type: string
+        initials:
+          type: string
+    PaymentEdit:
+      type: object
+      properties:
+        name: 
+          type: string
+        initials:
           type: string
   securitySchemes:
     auth:

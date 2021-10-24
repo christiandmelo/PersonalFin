@@ -51,3 +51,30 @@ suggestedCategory:
   methods:
     - GET
   controller: App\Controller\SuggestedCategoryController::getOne
+
+###### Payment ###########
+payments:
+  path: /payments
+  methods:
+    - GET
+  controller: App\Controller\PaymentController::getAll
+payment:
+  path: /payment/{id}
+  methods:
+    - GET
+  controller: App\Controller\PaymentController::getOne
+new_payment:
+  path: /payment
+  methods:
+    - POST
+  controller: App\Controller\PaymentController::new
+update_payment:
+  path: /payment/{id}
+  methods:
+    - PUT
+  controller: App\Controller\PaymentController::update
+delete_payment:
+  path: /payment/{id}
+  methods:
+    - DELETE
+  controller: App\Controller\PaymentController::delete
