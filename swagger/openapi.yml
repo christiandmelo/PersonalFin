@@ -131,7 +131,7 @@ paths:
         type: integer
       required: true
     get:
-      summary: Get client by id
+      summary: Get suggested payment by id
       responses:
         200:
           description: Success
@@ -144,6 +144,49 @@ paths:
                     type: boolean
                   data:
                     $ref: "#/components/schemas/SuggestedPayment"
+                    
+  /suggestedCategories:
+    get:
+      summary: Get all suggested category
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  page:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SuggestedCategory"
+  /suggestedCategory/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Get suggested category by id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/SuggestedCategory"
 security: 
 - auth: []
 components:
@@ -183,6 +226,13 @@ components:
         name: 
           type: string
         initials: 
+          type: string
+    SuggestedCategory:
+      type: object
+      properties:
+        shortName: 
+          type: string
+        name: 
           type: string
   securitySchemes:
     auth:

@@ -39,3 +39,15 @@ suggestedPayment:
   methods:
     - GET
   controller: App\Controller\SuggestedPaymentController::getOne
+
+    ###### Suggested Category ###########
+suggestedCategories:
+  path: /suggestedCategories
+  methods:
+    - GET
+  controller: App\Controller\SuggestedCategoryController::getAll
+suggestedCategory:
+  path: /suggestedCategory/{id}
+  methods:
+    - GET
+  controller: App\Controller\SuggestedCategoryController::getOne

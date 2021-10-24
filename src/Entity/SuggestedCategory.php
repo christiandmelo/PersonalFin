@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=SuggestedCategoryRepository::class)
  */
-class SuggestedCategory
+class SuggestedCategory implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -71,5 +71,13 @@ class SuggestedCategory
         $this->Active = $Active;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'shortName' => $this->getShortName(),
+            'name' => $this->getName()
+        ];
     }
 }
