@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
-class Category
+class Category implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -25,7 +25,7 @@ class Category
 
     /**
      * @ORM\ManyToOne(targetEntity=SuggestedCategory::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $SuggestedCategory;
 
@@ -107,5 +107,14 @@ class Category
         $this->Active = $Active;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'shortName' => $this->getShortName()
+        ];
     }
 }

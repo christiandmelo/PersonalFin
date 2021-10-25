@@ -78,3 +78,30 @@ delete_payment:
   methods:
     - DELETE
   controller: App\Controller\PaymentController::delete
+
+###### Category ###########
+categories:
+  path: /categories
+  methods:
+    - GET
+  controller: App\Controller\CategoryController::getAll
+category:
+  path: /category/{id}
+  methods:
+    - GET
+  controller: App\Controller\CategoryController::getOne
+new_category:
+  path: /category
+  methods:
+    - POST
+  controller: App\Controller\CategoryController::new
+update_category:
+  path: /category/{id}
+  methods:
+    - PUT
+  controller: App\Controller\CategoryController::update
+delete_category:
+  path: /category/{id}
+  methods:
+    - DELETE
+  controller: App\Controller\CategoryController::delete

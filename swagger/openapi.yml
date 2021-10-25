@@ -267,6 +267,85 @@ paths:
           content:
             text:
               example: 1
+  /category:
+    post:
+      summary: Create new category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryQuery"
+  /categories:
+    get:
+      summary: Get all categories
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  page:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/CategoryQuery"
+  /category/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Get category by id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/CategoryQuery"
+    put:
+      summary: Edit category
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CategoryEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CategoryQuery"
+    delete:
+      summary: Delete category
+      responses:
+        201:
+          description: "Success"
+          content:
+            text:
+              example: 1
 security: 
 - auth: []
 components:
@@ -328,6 +407,23 @@ components:
         name: 
           type: string
         initials:
+          type: string
+    
+    CategoryQuery:
+      type: object
+      properties:
+        id:
+          type: integer
+        name: 
+          type: string
+        shortName:
+          type: string
+    CategoryEdit:
+      type: object
+      properties:
+        name: 
+          type: string
+        shortName:
           type: string
   securitySchemes:
     auth:
