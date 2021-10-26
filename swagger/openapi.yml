@@ -346,6 +346,86 @@ paths:
           content:
             text:
               example: 1
+
+  /bank:
+    post:
+      summary: Create new bank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankQuery"
+  /banks:
+    get:
+      summary: Get all banks
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  page:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BankQuery"
+  /bank/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Get bank by id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/BankQuery"
+    put:
+      summary: Edit bank
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankQuery"
+    delete:
+      summary: Delete bank
+      responses:
+        201:
+          description: "Success"
+          content:
+            text:
+              example: 1
 security: 
 - auth: []
 components:
@@ -424,6 +504,19 @@ components:
         name: 
           type: string
         shortName:
+          type: string
+
+    BankQuery:
+      type: object
+      properties:
+        id:
+          type: integer
+        name: 
+          type: string
+    BankEdit:
+      type: object
+      properties:
+        name: 
           type: string
   securitySchemes:
     auth:
