@@ -105,3 +105,30 @@ delete_category:
   methods:
     - DELETE
   controller: App\Controller\CategoryController::delete
+
+###### Bank ###########
+banks:
+  path: /banks
+  methods:
+    - GET
+  controller: App\Controller\BankController::getAll
+bank:
+  path: /bank/{id}
+  methods:
+    - GET
+  controller: App\Controller\BankController::getOne
+new_bank:
+  path: /bank
+  methods:
+    - POST
+  controller: App\Controller\BankController::new
+update_bank:
+  path: /bank/{id}
+  methods:
+    - PUT
+  controller: App\Controller\BankController::update
+delete_bank:
+  path: /bank/{id}
+  methods:
+    - DELETE
+  controller: App\Controller\BankController::delete
