@@ -2,27 +2,27 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
+use App\Entity\BankAccount;
 use App\Helper\RequestDataExtractor;
 use App\Repository\ClientRepository;
-use App\Repository\CategoryRepository;
-use App\Service\CategoryService;
+use App\Repository\BankAccountRepository;
+use App\Service\BankAccountService;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 
-class CategoryController extends BaseController
+class BankAccountController extends BaseController
 {
 
     public function __construct(
-        CategoryService $categoryService,
+        BankAccountService $bankAccountService,
         RequestDataExtractor $requestDataExtractor,
-        CategoryRepository $repository,
+        BankAccountRepository $repository,
         CacheItemPoolInterface $cache,
         LoggerInterface $logger,
         ClientRepository $clientRepository
     ) {
         parent::__construct(
-            $categoryService, 
+            $bankAccountService, 
             $requestDataExtractor, 
             $repository, 
             $cache, 
@@ -33,16 +33,17 @@ class CategoryController extends BaseController
 
     public function updateExistingEntity(int $id, $entity)
     {
-        /** @var Category $entity */
-        $existingEntity = $this->getDoctrine()->getRepository(Category::class)->find($id);
+        /** @var BankAccount $entity */
+        $existingEntity = $this->getDoctrine()->getRepository(BankAccount::class)->find($id);
         $existingEntity->setName($entity->getName());
-        $existingEntity->setShortName($entity->getShortName());
+        $existingEntity->setInvestment($entity->getInvestment());
+        $existingEntity->setDisplayInSummary($entity->getDisplayInSummary());
 
         return $existingEntity;
     }
 
     public function cachePrefix(): string
     {
-        return 'category_';
+        return 'bankAccount_';
     }
 }

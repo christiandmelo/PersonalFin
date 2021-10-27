@@ -33,7 +33,6 @@ class PaymentController extends BaseController
 
     public function updateExistingEntity(int $id, $entity)
     {
-        $this->getUser();
         /** @var Payment $entity */
         $existingEntity = $this->getDoctrine()->getRepository(Payment::class)->find($id);
         $existingEntity->setName($entity->getName());

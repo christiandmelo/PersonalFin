@@ -33,7 +33,6 @@ class BankController extends BaseController
 
     public function updateExistingEntity(int $id, $entity)
     {
-        $this->getUser();
         /** @var Bank $entity */
         $existingEntity = $this->getDoctrine()->getRepository(Bank::class)->find($id);
         $existingEntity->setName($entity->getName());

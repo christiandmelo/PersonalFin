@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=BankAccountRepository::class)
  */
-class BankAccount
+class BankAccount implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -106,5 +106,15 @@ class BankAccount
         $this->Active = $Active;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'bankId' => $this->Bank->getId(),
+            'name' => $this->getName(),
+            'displayInSummary' => $this->getDisplayInSummary()
+        ];
     }
 }

@@ -132,3 +132,30 @@ delete_bank:
   methods:
     - DELETE
   controller: App\Controller\BankController::delete
+
+  ###### BankAccount ###########
+bankAccounts:
+  path: /bankAccounts
+  methods:
+    - GET
+  controller: App\Controller\BankAccountController::getAll
+bankAccount:
+  path: /bankAccount/{id}
+  methods:
+    - GET
+  controller: App\Controller\BankAccountController::getOne
+new_bankAccount:
+  path: /bankAccount
+  methods:
+    - POST
+  controller: App\Controller\BankAccountController::new
+update_bankAccount:
+  path: /bankAccount/{id}
+  methods:
+    - PUT
+  controller: App\Controller\BankAccountController::update
+delete_bankAccount:
+  path: /bankAccount/{id}
+  methods:
+    - DELETE
+  controller: App\Controller\BankAccountController::delete
