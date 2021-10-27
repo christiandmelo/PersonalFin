@@ -426,6 +426,86 @@ paths:
           content:
             text:
               example: 1
+
+  /bankAccount:
+    post:
+      summary: Create new bank account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankAccountEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankAccountQuery"
+  /bankAccounts:
+    get:
+      summary: Get all bank accounts
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  page:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BankAccountQuery"
+  /bankAccount/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Get bank account by id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/BankAccountQuery"
+    put:
+      summary: Edit bankAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BankAccountEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankAccountQuery"
+    delete:
+      summary: Delete bankAccount
+      responses:
+        201:
+          description: "Success"
+          content:
+            text:
+              example: 1
 security: 
 - auth: []
 components:
@@ -518,6 +598,31 @@ components:
       properties:
         name: 
           type: string
+
+    BankAccountQuery:
+      type: object
+      properties:
+        id:
+          type: integer
+        bankId:
+          type: integer
+        name: 
+          type: string
+        investiment:
+          type: boolean
+        displayInSummary:
+          type: boolean
+    BankAccountEdit:
+      type: object
+      properties:
+        bankId:
+          type: integer
+        name: 
+          type: string
+        investiment:
+          type: boolean
+        displayInSummary:
+          type: boolean
   securitySchemes:
     auth:
       type: http
