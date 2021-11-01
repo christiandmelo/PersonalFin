@@ -44,7 +44,7 @@ class CreditCardService implements EntityFactoryInterface
         $entity->setClient($client)
                ->setName($objetoJson->name)
                ->setClosingDay($objetoJson->closingDay)
-               ->setDueDate($dueDate)
+               //->setDueDate($dueDate)
                ->setAmountLimit($objetoJson->amountLimit)
                ->setDisplayInSummary($objetoJson->displayInSummary)
                ->setActive(true);
