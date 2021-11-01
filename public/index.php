@@ -3,7 +3,7 @@
 use App\Kernel;
 
 //if ($_SERVER['APP_ENV'] == 'dev') {
-    header('Access-Control-Allow-Origin:'.rtrim($_SERVER['HTTP_REFERER'], '/'));
+    header('Access-Control-Allow-Origin:http://localhost:4200');
 //} else {
 //    header('Access-Control-Allow-Origin:yourdomaind');
 //}
