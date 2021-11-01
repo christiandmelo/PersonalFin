@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CreditCardRepository::class)
  */
-class CreditCard
+class CreditCard implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -141,5 +141,17 @@ class CreditCard
         $this->Active = $Active;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'closingDay' => $this->getClosingDay(),
+            'dueDate' => $this->getDueDate(),
+            'amountLimit' => $this->getAmountLimit(),
+            'displayInSummary' => $this->getDisplayInSummary()
+        ];
     }
 }

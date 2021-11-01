@@ -133,7 +133,7 @@ delete_bank:
     - DELETE
   controller: App\Controller\BankController::delete
 
-  ###### BankAccount ###########
+###### BankAccount ###########
 bankAccounts:
   path: /bankAccounts
   methods:
@@ -159,3 +159,30 @@ delete_bankAccount:
   methods:
     - DELETE
   controller: App\Controller\BankAccountController::delete
+
+###### CreditCard ###########
+creditCards:
+  path: /creditCards
+  methods:
+    - GET
+  controller: App\Controller\CreditCardController::getAll
+creditCard:
+  path: /creditCard/{id}
+  methods:
+    - GET
+  controller: App\Controller\CreditCardController::getOne
+new_creditCard:
+  path: /creditCard
+  methods:
+    - POST
+  controller: App\Controller\CreditCardController::new
+update_creditCard:
+  path: /creditCard/{id}
+  methods:
+    - PUT
+  controller: App\Controller\CreditCardController::update
+delete_creditCard:
+  path: /creditCard/{id}
+  methods:
+    - DELETE
+  controller: App\Controller\CreditCardController::delete
