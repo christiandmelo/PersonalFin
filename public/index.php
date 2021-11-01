@@ -2,6 +2,18 @@
 
 use App\Kernel;
 
+//if ($_SERVER['APP_ENV'] == 'dev') {
+    header('Access-Control-Allow-Origin:http://localhost:4200');
+//} else {
+//    header('Access-Control-Allow-Origin:yourdomaind');
+//}
+header('Access-Control-Allow-Headers:*');
+header('Access-Control-Allow-Credentials:true');
+header('Access-Control-Allow-Headers:X-Requested-With, Content-Type, withCredentials');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    die();
+}
+
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 return function (array $context) {
