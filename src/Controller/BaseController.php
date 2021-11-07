@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\HypermidiaResponse;
 use App\Helper\EntityFactoryInterface;
 use App\Helper\RequestDataExtractor;
-use App\Repository\ClientRepository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\Persistence\ObjectRepository as PersistenceObjectRepository;
 use Psr\Cache\CacheItemPoolInterface;
@@ -13,6 +12,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class BaseController extends AbstractController
 {
@@ -51,6 +51,17 @@ abstract class BaseController extends AbstractController
         $this->logger = $logger;
     }
 
+    public function getTotalRows(Request $request): Response
+    {
+        try {
+            $filterData = $this->requestDataExtractor->getFilterData($request);
+            $rows = $this->repository->count($filterData);
+        } catch (\Throwable $erro) {
+            return HypermidiaResponse::fromError($erro)->getResponse();
+        }
+        return new JsonResponse($rows, Response::HTTP_OK);
+    }
+
     public function getAll(Request $request): Response
     {
         try {
@@ -63,7 +74,7 @@ abstract class BaseController extends AbstractController
                 $filterData,
                 $orderData,
                 $itemsPerPage,
-                ($paginationData - 1) * $itemsPerPage
+                $paginationData * $itemsPerPage
             );
 
             $hypermidiaResponse = new HypermidiaResponse($entityList, true, Response::HTTP_OK, $paginationData, $itemsPerPage);
