@@ -80,6 +80,11 @@ delete_payment:
   controller: App\Controller\PaymentController::delete
 
 ###### Category ###########
+rows_category:
+  path: /category/totalRows
+  methods:
+    - GET
+  controller: App\Controller\CategoryController::getTotalRows
 categories:
   path: /categories
   methods:
