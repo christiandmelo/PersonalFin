@@ -22,123 +22,123 @@ class CreditCard implements \JsonSerializable
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Client;
+    private $client;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $ClosingDay;
+    private $closingDay;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $DueDate;
+    private $dueDate;
 
     /**
      * @ORM\Column(type="decimal", precision=15, scale=2)
      */
-    private $AmountLimit;
+    private $amountLimit;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $DisplayInSummary;
+    private $displayInSummary;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): ?Client
+    public function getClient(): ?client
     {
-        return $this->Client;
+        return $this->client;
     }
 
-    public function setClient(?Client $Client): self
+    public function setClient(?client $client): self
     {
-        $this->Client = $Client;
+        $this->client = $client;
 
         return $this;
     }
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getClosingDay(): ?int
     {
-        return $this->ClosingDay;
+        return $this->closingDay;
     }
 
-    public function setClosingDay(int $ClosingDay): self
+    public function setClosingDay(int $closingDay): self
     {
-        $this->ClosingDay = $ClosingDay;
+        $this->closingDay = $closingDay;
 
         return $this;
     }
 
     public function getDueDate(): ?DateTime
     {
-        return $this->DueDate;
+        return $this->dueDate;
     }
 
-    public function setDueDate(DateTime $DueDate): self
+    public function setDueDate(DateTime $dueDate): self
     {
-        $this->DueDate = $DueDate;
+        $this->dueDate = $dueDate;
 
         return $this;
     }
 
     public function getAmountLimit(): ?string
     {
-        return $this->AmountLimit;
+        return $this->amountLimit;
     }
 
-    public function setAmountLimit(string $AmountLimit): self
+    public function setAmountLimit(string $amountLimit): self
     {
-        $this->AmountLimit = $AmountLimit;
+        $this->amountLimit = $amountLimit;
 
         return $this;
     }
 
     public function getDisplayInSummary(): ?bool
     {
-        return $this->DisplayInSummary;
+        return $this->displayInSummary;
     }
 
-    public function setDisplayInSummary(bool $DisplayInSummary): self
+    public function setDisplayInSummary(bool $displayInSummary): self
     {
-        $this->DisplayInSummary = $DisplayInSummary;
+        $this->displayInSummary = $displayInSummary;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }

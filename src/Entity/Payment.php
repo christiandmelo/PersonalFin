@@ -21,90 +21,90 @@ class Payment implements \JsonSerializable
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Client;
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=SuggestedPayment::class)
      * @ORM\JoinColumn(nullable=true)
      */
-    private $SuggestedPayment;
+    private $suggestedPayment;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=4)
      */
-    private $Initials;
+    private $initials;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): ?Client
+    public function getClient(): ?client
     {
-        return $this->Client;
+        return $this->client;
     }
 
-    public function setClient(?Client $Client): self
+    public function setClient(?client $client): self
     {
-        $this->Client = $Client;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getSuggestedPayment(): ?SuggestedPayment
+    public function getSuggestedPayment(): ?suggestedPayment
     {
-        return $this->SuggestedPayment;
+        return $this->suggestedPayment;
     }
 
-    public function setSuggestedPayment(?SuggestedPayment $SuggestedPayment): self
+    public function setSuggestedPayment(?suggestedPayment $suggestedPayment): self
     {
-        $this->SuggestedPayment = $SuggestedPayment;
+        $this->suggestedPayment = $suggestedPayment;
 
         return $this;
     }
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getInitials(): ?string
     {
-        return $this->Initials;
+        return $this->initials;
     }
 
-    public function setInitials(string $Initials): self
+    public function setInitials(string $initials): self
     {
-        $this->Initials = $Initials;
+        $this->initials = $initials;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }

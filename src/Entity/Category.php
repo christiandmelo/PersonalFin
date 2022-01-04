@@ -21,90 +21,124 @@ class Category implements \JsonSerializable
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Client;
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=SuggestedCategory::class)
      * @ORM\JoinColumn(nullable=true)
      */
-    private $SuggestedCategory;
+    private $suggestedCategory;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $ShortName;
+    private $icon;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $color;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $type;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): ?Client
+    public function getClient(): ?client
     {
-        return $this->Client;
+        return $this->client;
     }
 
-    public function setClient(?Client $Client): self
+    public function setClient(?client $client): self
     {
-        $this->Client = $Client;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getSuggestedCategory(): ?SuggestedCategory
+    public function getSuggestedCategory(): ?suggestedCategory
     {
-        return $this->SuggestedCategory;
+        return $this->suggestedCategory;
     }
 
-    public function setSuggestedCategory(?SuggestedCategory $SuggestedCategory): self
+    public function setSuggestedCategory(?suggestedCategory $suggestedCategory): self
     {
-        $this->SuggestedCategory = $SuggestedCategory;
+        $this->suggestedCategory = $suggestedCategory;
 
         return $this;
     }
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getShortName(): ?string
+    public function getIcon(): ?string
     {
-        return $this->ShortName;
+        return $this->icon;
     }
 
-    public function setShortName(string $ShortName): self
+    public function setIcon(string $icon): self
     {
-        $this->ShortName = $ShortName;
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }
@@ -114,7 +148,9 @@ class Category implements \JsonSerializable
         return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'shortName' => $this->getShortName()
+            'icon' => $this->getIcon(),
+            'color' => $this->getColor(),
+            'type' => $this->getType()
         ];
     }
 }

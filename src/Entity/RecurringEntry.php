@@ -21,226 +21,226 @@ class RecurringEntry
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Client;
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Category;
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=BankAccount::class)
      */
-    private $BankAccount;
+    private $bankAccount;
 
     /**
      * @ORM\ManyToOne(targetEntity=CreditCard::class)
      */
-    private $CreditCard;
+    private $creditCard;
 
     /**
      * @ORM\ManyToOne(targetEntity=Payment::class)
      */
-    private $Payment;
+    private $payment;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\Column(type="decimal", precision=15, scale=2)
      */
-    private $Amount;
+    private $amount;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Recurrent;
+    private $recurrent;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $FixedDay;
+    private $fixedDay;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $StartDate;
+    private $startDate;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $EndDate;
+    private $endDate;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $AutomaticWithdrawal;
+    private $automaticWithdrawal;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): ?Client
+    public function getClient(): ?client
     {
-        return $this->Client;
+        return $this->client;
     }
 
-    public function setClient(?Client $Client): self
+    public function setClient(?client $client): self
     {
-        $this->Client = $Client;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): ?category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): self
+    public function setCategory(?category $category): self
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }
 
-    public function getBankAccount(): ?BankAccount
+    public function getBankAccount(): ?bankAccount
     {
-        return $this->BankAccount;
+        return $this->bankAccount;
     }
 
-    public function setBankAccount(?BankAccount $BankAccount): self
+    public function setBankAccount(?bankAccount $bankAccount): self
     {
-        $this->BankAccount = $BankAccount;
+        $this->bankAccount = $bankAccount;
 
         return $this;
     }
 
-    public function getCreditCard(): ?CreditCard
+    public function getCreditCard(): ?creditCard
     {
-        return $this->CreditCard;
+        return $this->creditCard;
     }
 
-    public function setCreditCard(?CreditCard $CreditCard): self
+    public function setCreditCard(?creditCard $creditCard): self
     {
-        $this->CreditCard = $CreditCard;
+        $this->creditCard = $creditCard;
 
         return $this;
     }
 
-    public function getPayment(): ?Payment
+    public function getPayment(): ?payment
     {
-        return $this->Payment;
+        return $this->payment;
     }
 
-    public function setPayment(?Payment $Payment): self
+    public function setPayment(?payment $payment): self
     {
-        $this->Payment = $Payment;
+        $this->payment = $payment;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getAmount(): ?string
     {
-        return $this->Amount;
+        return $this->amount;
     }
 
-    public function setAmount(string $Amount): self
+    public function setAmount(string $amount): self
     {
-        $this->Amount = $Amount;
+        $this->amount = $amount;
 
         return $this;
     }
 
     public function getRecurrent(): ?bool
     {
-        return $this->Recurrent;
+        return $this->recurrent;
     }
 
-    public function setRecurrent(bool $Recurrent): self
+    public function setRecurrent(bool $recurrent): self
     {
-        $this->Recurrent = $Recurrent;
+        $this->recurrent = $recurrent;
 
         return $this;
     }
 
     public function getFixedDay(): ?bool
     {
-        return $this->FixedDay;
+        return $this->fixedDay;
     }
 
-    public function setFixedDay(bool $FixedDay): self
+    public function setFixedDay(bool $fixedDay): self
     {
-        $this->FixedDay = $FixedDay;
+        $this->fixedDay = $fixedDay;
 
         return $this;
     }
 
     public function getStartDate(): ?\DateTimeInterface
     {
-        return $this->StartDate;
+        return $this->startDate;
     }
 
-    public function setStartDate(\DateTimeInterface $StartDate): self
+    public function setStartDate(\DateTimeInterface $startDate): self
     {
-        $this->StartDate = $StartDate;
+        $this->startDate = $startDate;
 
         return $this;
     }
 
     public function getEndDate(): ?\DateTimeInterface
     {
-        return $this->EndDate;
+        return $this->endDate;
     }
 
-    public function setEndDate(\DateTimeInterface $EndDate): self
+    public function setEndDate(\DateTimeInterface $endDate): self
     {
-        $this->EndDate = $EndDate;
+        $this->endDate = $endDate;
 
         return $this;
     }
 
     public function getAutomaticWithdrawal(): ?bool
     {
-        return $this->AutomaticWithdrawal;
+        return $this->automaticWithdrawal;
     }
 
-    public function setAutomaticWithdrawal(bool $AutomaticWithdrawal): self
+    public function setAutomaticWithdrawal(bool $automaticWithdrawal): self
     {
-        $this->AutomaticWithdrawal = $AutomaticWithdrawal;
+        $this->automaticWithdrawal = $automaticWithdrawal;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }

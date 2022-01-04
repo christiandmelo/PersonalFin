@@ -21,89 +21,89 @@ class BankAccount implements \JsonSerializable
      * @ORM\ManyToOne(targetEntity=Bank::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Bank;
+    private $bank;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Investment;
+    private $investment;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $DisplayInSummary;
+    private $displayInSummary;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getBank(): ?Bank
+    public function getBank(): ?bank
     {
-        return $this->Bank;
+        return $this->bank;
     }
 
-    public function setBank(?Bank $Bank): self
+    public function setBank(?bank $bank): self
     {
-        $this->Bank = $Bank;
+        $this->bank = $bank;
 
         return $this;
     }
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getInvestment(): ?bool
     {
-        return $this->Investment;
+        return $this->investment;
     }
 
-    public function setInvestment(bool $Investment): self
+    public function setInvestment(bool $investment): self
     {
-        $this->Investment = $Investment;
+        $this->investment = $investment;
 
         return $this;
     }
 
     public function getDisplayInSummary(): ?bool
     {
-        return $this->DisplayInSummary;
+        return $this->displayInSummary;
     }
 
-    public function setDisplayInSummary(bool $DisplayInSummary): self
+    public function setDisplayInSummary(bool $displayInSummary): self
     {
-        $this->DisplayInSummary = $DisplayInSummary;
+        $this->displayInSummary = $displayInSummary;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }
@@ -112,7 +112,7 @@ class BankAccount implements \JsonSerializable
     {
         return [
             'id' => $this->getId(),
-            'bankId' => $this->Bank->getId(),
+            'bankId' => $this->bank->getId(),
             'name' => $this->getName(),
             'displayInSummary' => $this->getDisplayInSummary()
         ];

@@ -21,141 +21,141 @@ class CreditCardBill
      * @ORM\ManyToOne(targetEntity=CreditCard::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $CreditCard;
+    private $creditCard;
 
     /**
      * @ORM\Column(type="decimal", precision=18, scale=4)
      */
-    private $TotalCreditCardBill;
+    private $totalCreditCardBill;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $ClosingDay;
+    private $closingDay;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $DueDate;
+    private $dueDate;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Closed;
+    private $closed;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $PayDay;
+    private $payDay;
 
     /**
      * @ORM\ManyToOne(targetEntity=BankAccount::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $BankAccount;
+    private $bankAccount;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreditCard(): ?CreditCard
+    public function getCreditCard(): ?creditCard
     {
-        return $this->CreditCard;
+        return $this->creditCard;
     }
 
-    public function setCreditCard(?CreditCard $CreditCard): self
+    public function setCreditCard(?creditCard $creditCard): self
     {
-        $this->CreditCard = $CreditCard;
+        $this->creditCard = $creditCard;
 
         return $this;
     }
 
     public function getTotalCreditCardBill(): ?string
     {
-        return $this->TotalCreditCardBill;
+        return $this->totalCreditCardBill;
     }
 
-    public function setTotalCreditCardBill(string $TotalCreditCardBill): self
+    public function setTotalCreditCardBill(string $totalCreditCardBill): self
     {
-        $this->TotalCreditCardBill = $TotalCreditCardBill;
+        $this->totalCreditCardBill = $totalCreditCardBill;
 
         return $this;
     }
 
     public function getClosingDay(): ?\DateTimeInterface
     {
-        return $this->ClosingDay;
+        return $this->closingDay;
     }
 
-    public function setClosingDay(\DateTimeInterface $ClosingDay): self
+    public function setClosingDay(\DateTimeInterface $closingDay): self
     {
-        $this->ClosingDay = $ClosingDay;
+        $this->closingDay = $closingDay;
 
         return $this;
     }
 
     public function getDueDate(): ?\DateTimeInterface
     {
-        return $this->DueDate;
+        return $this->dueDate;
     }
 
-    public function setDueDate(\DateTimeInterface $DueDate): self
+    public function setDueDate(\DateTimeInterface $dueDate): self
     {
-        $this->DueDate = $DueDate;
+        $this->dueDate = $dueDate;
 
         return $this;
     }
 
     public function getClosed(): ?bool
     {
-        return $this->Closed;
+        return $this->closed;
     }
 
-    public function setClosed(bool $Closed): self
+    public function setClosed(bool $closed): self
     {
-        $this->Closed = $Closed;
+        $this->closed = $closed;
 
         return $this;
     }
 
     public function getPayDay(): ?\DateTimeInterface
     {
-        return $this->PayDay;
+        return $this->payDay;
     }
 
-    public function setPayDay(\DateTimeInterface $PayDay): self
+    public function setPayDay(\DateTimeInterface $payDay): self
     {
-        $this->PayDay = $PayDay;
+        $this->payDay = $payDay;
 
         return $this;
     }
 
-    public function getBankAccount(): ?BankAccount
+    public function getBankAccount(): ?bankAccount
     {
-        return $this->BankAccount;
+        return $this->bankAccount;
     }
 
-    public function setBankAccount(?BankAccount $BankAccount): self
+    public function setBankAccount(?bankAccount $bankAccount): self
     {
-        $this->BankAccount = $BankAccount;
+        $this->bankAccount = $bankAccount;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }

@@ -36,7 +36,8 @@ class CategoryController extends BaseController
         /** @var Category $entity */
         $existingEntity = $this->getDoctrine()->getRepository(Category::class)->find($id);
         $existingEntity->setName($entity->getName());
-        $existingEntity->setShortName($entity->getShortName());
+        $existingEntity->setColor($entity->getColor());
+        $existingEntity->setIcon($entity->getIcon());
 
         return $existingEntity;
     }
