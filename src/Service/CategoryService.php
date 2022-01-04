@@ -41,7 +41,9 @@ class CategoryService implements EntityFactoryInterface
         $entity = new Category();
         $entity->setClient($client)
                ->setName($objetoJson->name)
-               ->setShortName($objetoJson->shortName)
+               ->setColor($objetoJson->color)
+               ->setIcon($objetoJson->icon)
+               ->setType($objetoJson->type)
                ->setActive(true);
 
         return $entity;
@@ -63,8 +65,16 @@ class CategoryService implements EntityFactoryInterface
             throw new EntityFactoryException('Category needs a name');
         }
 
-        if (!property_exists($objetoJson, 'shortName')) {
-            throw new EntityFactoryException('Category needs a short name');
+        if (!property_exists($objetoJson, 'color')) {
+            throw new EntityFactoryException('Category needs a color');
+        }
+
+        if (!property_exists($objetoJson, 'icon')) {
+            throw new EntityFactoryException('Category needs an icon');
+        }
+
+        if (!property_exists($objetoJson, 'type')) {
+            throw new EntityFactoryException('Category needs a type');
         }
     }
 
