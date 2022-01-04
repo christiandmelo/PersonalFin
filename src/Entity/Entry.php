@@ -21,278 +21,278 @@ class Entry
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Client;
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=Status::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Status;
+    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=BankAccount::class)
      */
-    private $BankAccount;
+    private $bankAccount;
 
     /**
      * @ORM\ManyToOne(targetEntity=RecurringEntry::class)
      */
-    private $RecurringEntry;
+    private $recurringEntry;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Category;
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity=Payment::class)
      */
-    private $Payment;
+    private $payment;
 
     /**
      * @ORM\ManyToOne(targetEntity=CreditCardBill::class)
      */
-    private $CreditCardBill;
+    private $creditCardBill;
 
     /**
      * @ORM\ManyToOne(targetEntity=SplitEntry::class)
      */
-    private $SplitEntry;
+    private $splitEntry;
 
     /**
      * @ORM\ManyToOne(targetEntity=Client::class)
      */
-    private $DebtorClient;
+    private $debtorClient;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $IssuanceDate;
+    private $issuanceDate;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $DueDate;
+    private $dueDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $DateWithdrew;
+    private $dateWithdrew;
 
     /**
      * @ORM\Column(type="decimal", precision=15, scale=2)
      */
-    private $Amount;
+    private $amount;
 
     /**
      * @ORM\Column(type="decimal", precision=15, scale=2, nullable=true)
      */
-    private $DebitedAmount;
+    private $debitedAmount;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $TypeEntry;
+    private $typeEntry;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): ?Client
+    public function getClient(): ?client
     {
-        return $this->Client;
+        return $this->client;
     }
 
-    public function setClient(?Client $Client): self
+    public function setClient(?client $client): self
     {
-        $this->Client = $Client;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getStatus(): ?Status
+    public function getStatus(): ?status
     {
-        return $this->Status;
+        return $this->status;
     }
 
-    public function setStatus(?Status $Status): self
+    public function setStatus(?status $status): self
     {
-        $this->Status = $Status;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getBankAccount(): ?BankAccount
+    public function getBankAccount(): ?bankAccount
     {
-        return $this->BankAccount;
+        return $this->bankAccount;
     }
 
-    public function setBankAccount(?BankAccount $BankAccount): self
+    public function setBankAccount(?bankAccount $bankAccount): self
     {
-        $this->BankAccount = $BankAccount;
+        $this->bankAccount = $bankAccount;
 
         return $this;
     }
 
-    public function getRecurringEntry(): ?RecurringEntry
+    public function getRecurringEntry(): ?recurringEntry
     {
-        return $this->RecurringEntry;
+        return $this->recurringEntry;
     }
 
-    public function setRecurringEntry(?RecurringEntry $RecurringEntry): self
+    public function setRecurringEntry(?recurringEntry $recurringEntry): self
     {
-        $this->RecurringEntry = $RecurringEntry;
+        $this->recurringEntry = $recurringEntry;
 
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): ?category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): self
+    public function setCategory(?category $category): self
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }
 
-    public function getPayment(): ?Payment
+    public function getPayment(): ?payment
     {
-        return $this->Payment;
+        return $this->payment;
     }
 
-    public function setPayment(?Payment $Payment): self
+    public function setPayment(?payment $payment): self
     {
-        $this->Payment = $Payment;
+        $this->payment = $payment;
 
         return $this;
     }
 
-    public function getCreditCardBill(): ?CreditCardBill
+    public function getCreditCardBill(): ?creditCardBill
     {
-        return $this->CreditCardBill;
+        return $this->creditCardBill;
     }
 
-    public function setCreditCardBill(?CreditCardBill $CreditCardBill): self
+    public function setCreditCardBill(?creditCardBill $creditCardBill): self
     {
-        $this->CreditCardBill = $CreditCardBill;
+        $this->creditCardBill = $creditCardBill;
 
         return $this;
     }
 
-    public function getSplitEntry(): ?SplitEntry
+    public function getSplitEntry(): ?splitEntry
     {
-        return $this->SplitEntry;
+        return $this->splitEntry;
     }
 
-    public function setSplitEntry(?SplitEntry $SplitEntry): self
+    public function setSplitEntry(?splitEntry $splitEntry): self
     {
-        $this->SplitEntry = $SplitEntry;
+        $this->splitEntry = $splitEntry;
 
         return $this;
     }
 
-    public function getDebtorClient(): ?Client
+    public function getDebtorClient(): ?client
     {
-        return $this->DebtorClient;
+        return $this->debtorClient;
     }
 
-    public function setDebtorClient(?Client $DebtorClient): self
+    public function setDebtorClient(?client $debtorClient): self
     {
-        $this->DebtorClient = $DebtorClient;
+        $this->debtorClient = $debtorClient;
 
         return $this;
     }
 
     public function getIssuanceDate(): ?\DateTimeInterface
     {
-        return $this->IssuanceDate;
+        return $this->issuanceDate;
     }
 
-    public function setIssuanceDate(\DateTimeInterface $IssuanceDate): self
+    public function setIssuanceDate(\DateTimeInterface $issuanceDate): self
     {
-        $this->IssuanceDate = $IssuanceDate;
+        $this->issuanceDate = $issuanceDate;
 
         return $this;
     }
 
     public function getDueDate(): ?\DateTimeInterface
     {
-        return $this->DueDate;
+        return $this->dueDate;
     }
 
-    public function setDueDate(\DateTimeInterface $DueDate): self
+    public function setDueDate(\DateTimeInterface $dueDate): self
     {
-        $this->DueDate = $DueDate;
+        $this->dueDate = $dueDate;
 
         return $this;
     }
 
     public function getDateWithdrew(): ?\DateTimeInterface
     {
-        return $this->DateWithdrew;
+        return $this->dateWithdrew;
     }
 
-    public function setDateWithdrew(?\DateTimeInterface $DateWithdrew): self
+    public function setDateWithdrew(?\DateTimeInterface $dateWithdrew): self
     {
-        $this->DateWithdrew = $DateWithdrew;
+        $this->dateWithdrew = $dateWithdrew;
 
         return $this;
     }
 
     public function getAmount(): ?string
     {
-        return $this->Amount;
+        return $this->amount;
     }
 
-    public function setAmount(string $Amount): self
+    public function setAmount(string $amount): self
     {
-        $this->Amount = $Amount;
+        $this->amount = $amount;
 
         return $this;
     }
 
     public function getDebitedAmount(): ?string
     {
-        return $this->DebitedAmount;
+        return $this->debitedAmount;
     }
 
-    public function setDebitedAmount(?string $DebitedAmount): self
+    public function setDebitedAmount(?string $debitedAmount): self
     {
-        $this->DebitedAmount = $DebitedAmount;
+        $this->debitedAmount = $debitedAmount;
 
         return $this;
     }
 
     public function getTypeEntry(): ?int
     {
-        return $this->TypeEntry;
+        return $this->typeEntry;
     }
 
-    public function setTypeEntry(int $TypeEntry): self
+    public function setTypeEntry(int $typeEntry): self
     {
-        $this->TypeEntry = $TypeEntry;
+        $this->typeEntry = $typeEntry;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }

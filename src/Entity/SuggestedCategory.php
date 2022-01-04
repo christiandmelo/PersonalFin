@@ -18,57 +18,91 @@ class SuggestedCategory implements \JsonSerializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $ShortName;
-
-    /**
      * @ORM\Column(type="string", length=100)
      */
-    private $Name;
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $icon;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $color;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $type;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getShortName(): ?string
+    public function getName(): ?string
     {
-        return $this->ShortName;
+        return $this->name;
     }
 
-    public function setShortName(string $ShortName): self
+    public function setName(string $name): self
     {
-        $this->ShortName = $ShortName;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getIcon(): ?string
     {
-        return $this->Name;
+        return $this->icon;
     }
 
-    public function setName(string $Name): self
+    public function setIcon(string $icon): self
     {
-        $this->Name = $Name;
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    public function getColor(): ?string
+    {
+        return $this->color;
+    }
+
+    public function setColor(string $color): self
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }
@@ -76,8 +110,11 @@ class SuggestedCategory implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'shortName' => $this->getShortName(),
-            'name' => $this->getName()
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'icon' => $this->getIcon(),
+            'color' => $this->getColor(),
+            'type' => $this->getType()
         ];
     }
 }

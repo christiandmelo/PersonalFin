@@ -21,73 +21,73 @@ class SplitClient
      * @ORM\ManyToOne(targetEntity=Client::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Client;
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity=Split::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Split;
+    private $split;
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=4)
      */
-    private $Percentage;
+    private $percentage;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getClient(): ?Client
+    public function getClient(): ?client
     {
-        return $this->Client;
+        return $this->client;
     }
 
-    public function setClient(?Client $Client): self
+    public function setClient(?client $client): self
     {
-        $this->Client = $Client;
+        $this->client = $client;
 
         return $this;
     }
 
-    public function getSplit(): ?Split
+    public function getSplit(): ?split
     {
-        return $this->Split;
+        return $this->split;
     }
 
-    public function setSplit(?Split $Split): self
+    public function setSplit(?split $split): self
     {
-        $this->Split = $Split;
+        $this->split = $split;
 
         return $this;
     }
 
     public function getPercentage(): ?string
     {
-        return $this->Percentage;
+        return $this->percentage;
     }
 
-    public function setPercentage(string $Percentage): self
+    public function setPercentage(string $percentage): self
     {
-        $this->Percentage = $Percentage;
+        $this->percentage = $percentage;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }

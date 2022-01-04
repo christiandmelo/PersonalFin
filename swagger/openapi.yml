@@ -4,7 +4,7 @@ info:
   description: API to control your personal finances.
   version: 0.0.1
 servers:
-- url: http://localhost/PersonalFin/api/public
+- url: https://api-personal-fin.herokuapp.com/public/
   description: API de Teste
 paths:
   /login:
@@ -547,10 +547,14 @@ components:
     SuggestedCategory:
       type: object
       properties:
-        shortName: 
-          type: string
         name: 
           type: string
+        icon:
+          type: string
+        color:
+          type: string
+        type:
+          type: integer
           
     PaymentQuery:
       type: object
@@ -576,15 +580,23 @@ components:
           type: integer
         name: 
           type: string
-        shortName:
+        icon:
           type: string
+        color:
+          type: string
+        type:
+          type: integer
     CategoryEdit:
       type: object
       properties:
         name: 
           type: string
-        shortName:
+        icon:
           type: string
+        color:
+          type: string
+        type:
+          type: integer
 
     BankQuery:
       type: object

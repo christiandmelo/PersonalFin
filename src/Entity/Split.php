@@ -20,22 +20,22 @@ class Split
     /**
      * @ORM\Column(type="string", length=150)
      */
-    private $Name;
+    private $name;
 
     /**
      * @ORM\Column(type="string", length=500, nullable=true)
      */
-    private $Description;
+    private $description;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $FixedPercentage;
+    private $fixedPercentage;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $Active;
+    private $active;
 
     public function getId(): ?int
     {
@@ -44,48 +44,48 @@ class Split
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(?string $Description): self
+    public function setDescription(?string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getFixedPercentage(): ?bool
     {
-        return $this->FixedPercentage;
+        return $this->fixedPercentage;
     }
 
-    public function setFixedPercentage(bool $FixedPercentage): self
+    public function setFixedPercentage(bool $fixedPercentage): self
     {
-        $this->FixedPercentage = $FixedPercentage;
+        $this->fixedPercentage = $fixedPercentage;
 
         return $this;
     }
 
     public function getActive(): ?bool
     {
-        return $this->Active;
+        return $this->active;
     }
 
-    public function setActive(bool $Active): self
+    public function setActive(bool $active): self
     {
-        $this->Active = $Active;
+        $this->active = $active;
 
         return $this;
     }
