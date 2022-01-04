@@ -82,7 +82,7 @@ class BankAccountService implements EntityFactoryInterface
         if(!$insert)
             return;
 
-        $bankAccount = $this->bankAccountRepository->findBy(array('Bank' => $bankId, 'Name' => $name));
+        $bankAccount = $this->bankAccountRepository->findBy(array('bank' => $bankId, 'name' => $name));
         if (count($bankAccount) > 0) {
             throw new EntityFactoryException("Bank Account alraedy exist with these name");
         }

@@ -49,7 +49,7 @@ class PaymentService implements EntityFactoryInterface
 
     private function getClient(int $userId): Client
     {
-        $client = $this->clientRepository->findBy(array('User' => $userId));
+        $client = $this->clientRepository->findBy(array('user' => $userId));
         if (count($client) <= 0) {
             throw new EntityFactoryException("User doesn't have a client registered");
         }
@@ -73,7 +73,7 @@ class PaymentService implements EntityFactoryInterface
         if(!$insert)
             return;
 
-        $payment = $this->paymentRepository->findBy(array('Client' => $clientId, 'Initials' => $initials));
+        $payment = $this->paymentRepository->findBy(array('client' => $clientId, 'initials' => $initials));
         if (count($payment) > 0) {
             throw new EntityFactoryException("Payment alraedy exist with these initials");
         }

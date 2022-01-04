@@ -53,7 +53,7 @@ class CreditCardService implements EntityFactoryInterface
 
     private function getClient(int $userId): Client
     {
-        $client = $this->clientRepository->findBy(array('User' => $userId));
+        $client = $this->clientRepository->findBy(array('user' => $userId));
         if (count($client) <= 0) {
             throw new EntityFactoryException("User doesn't have a client registered");
         }
@@ -89,9 +89,9 @@ class CreditCardService implements EntityFactoryInterface
         if(!$insert)
             return;
 
-        $creditCard = $this->creditCardRepository->findBy(array('Client' => $clientId, 'Name' => $name));
+        $creditCard = $this->creditCardRepository->findBy(array('client' => $clientId, 'name' => $name));
         if (count($creditCard) > 0) {
-            throw new EntityFactoryException("CreditCard alraedy exist with these name");
+            throw new EntityFactoryException("Credit Card alraedy exist with these name");
         }
     }
 }

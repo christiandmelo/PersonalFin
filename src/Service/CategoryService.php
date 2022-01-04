@@ -51,7 +51,7 @@ class CategoryService implements EntityFactoryInterface
 
     private function getClient(int $userId): Client
     {
-        $client = $this->clientRepository->findBy(array('User' => $userId));
+        $client = $this->clientRepository->findBy(array('user' => $userId));
         if (count($client) <= 0) {
             throw new EntityFactoryException("User doesn't have a client registered");
         }
@@ -83,7 +83,7 @@ class CategoryService implements EntityFactoryInterface
         if(!$insert)
             return;
 
-        $category = $this->categoryRepository->findBy(array('Client' => $clientId, 'Name' => $name));
+        $category = $this->categoryRepository->findBy(array('client' => $clientId, 'name' => $name));
         if (count($category) > 0) {
             throw new EntityFactoryException("Category already exist with these name");
         }

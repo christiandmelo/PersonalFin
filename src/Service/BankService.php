@@ -48,7 +48,7 @@ class BankService implements EntityFactoryInterface
 
     private function getClient(int $userId): Client
     {
-        $client = $this->clientRepository->findBy(array('User' => $userId));
+        $client = $this->clientRepository->findBy(array('user' => $userId));
         if (count($client) <= 0) {
             throw new EntityFactoryException("User doesn't have a client registered");
         }
@@ -68,7 +68,7 @@ class BankService implements EntityFactoryInterface
         if(!$insert)
             return;
 
-        $bank = $this->bankRepository->findBy(array('Client' => $clientId, 'Name' => $name));
+        $bank = $this->bankRepository->findBy(array('client' => $clientId, 'name' => $name));
         if (count($bank) > 0) {
             throw new EntityFactoryException("Bank alraedy exist with these name");
         }
