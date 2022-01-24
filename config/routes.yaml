@@ -191,3 +191,30 @@ delete_creditCard:
   methods:
     - DELETE
   controller: App\Controller\CreditCardController::delete
+
+  ###### Entry ###########
+entries:
+  path: /entries
+  methods:
+    - GET
+  controller: App\Controller\EntryController::getAll
+entry:
+  path: /entry/{id}
+  methods:
+    - GET
+  controller: App\Controller\EntryController::getOne
+new_entry:
+  path: /entry
+  methods:
+    - POST
+  controller: App\Controller\EntryController::new
+update_entry:
+  path: /entry/{id}
+  methods:
+    - PUT
+  controller: App\Controller\EntryController::update
+delete_entry:
+  path: /entry/{id}
+  methods:
+    - DELETE
+  controller: App\Controller\EntryController::delete

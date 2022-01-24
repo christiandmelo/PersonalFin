@@ -296,4 +296,25 @@ class Entry
 
         return $this;
     }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'statusId' => $this->getStatus()->getId(),
+            'bankAccountId' => $this->getBankAccount()->getId(),
+            'recurringEntryId' => $this->getRecurringEntry()->getId(),
+            'categoryId' => $this->getCategory()->getId(),
+            'paymentId' => $this->getPayment()->getId(),
+            'creditCardBillId' => $this->getCreditCardBill()->getId(),
+            'splitEntryId' => $this->getSplitEntry()->getId(),
+            'debtorClientId' => $this->getDebtorClient()->getId(),
+            'issuanceDate' => $this->getIssuanceDate(),
+            'dueDate' => $this->getDueDate(),
+            'dateWithdrew' => $this->getDateWithdrew(),
+            'amount' => $this->getAmount(),
+            'debitedAmount' => $this->getDebitedAmount(),
+            'typeEntry' => $this->getTypeEntry()
+        ];
+    }
 }
