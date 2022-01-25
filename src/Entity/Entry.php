@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=EntryRepository::class)
  */
-class Entry
+class Entry implements \JsonSerializable
 {
     /**
      * @ORM\Id
@@ -213,36 +213,36 @@ class Entry
         return $this;
     }
 
-    public function getIssuanceDate(): ?\DateTimeInterface
+    public function getIssuanceDate(): ?\DateTime
     {
         return $this->issuanceDate;
     }
 
-    public function setIssuanceDate(\DateTimeInterface $issuanceDate): self
+    public function setIssuanceDate(\DateTime $issuanceDate): self
     {
         $this->issuanceDate = $issuanceDate;
 
         return $this;
     }
 
-    public function getDueDate(): ?\DateTimeInterface
+    public function getDueDate(): ?\DateTime
     {
         return $this->dueDate;
     }
 
-    public function setDueDate(\DateTimeInterface $dueDate): self
+    public function setDueDate(\DateTime $dueDate): self
     {
         $this->dueDate = $dueDate;
 
         return $this;
     }
 
-    public function getDateWithdrew(): ?\DateTimeInterface
+    public function getDateWithdrew(): ?\DateTime
     {
         return $this->dateWithdrew;
     }
 
-    public function setDateWithdrew(?\DateTimeInterface $dateWithdrew): self
+    public function setDateWithdrew(?\DateTime $dateWithdrew): self
     {
         $this->dateWithdrew = $dateWithdrew;
 
@@ -303,15 +303,15 @@ class Entry
             'id' => $this->getId(),
             'statusId' => $this->getStatus()->getId(),
             'bankAccountId' => $this->getBankAccount()->getId(),
-            'recurringEntryId' => $this->getRecurringEntry()->getId(),
+            'recurringEntryId' => $this->getRecurringEntry()?->getId(),
             'categoryId' => $this->getCategory()->getId(),
             'paymentId' => $this->getPayment()->getId(),
-            'creditCardBillId' => $this->getCreditCardBill()->getId(),
-            'splitEntryId' => $this->getSplitEntry()->getId(),
-            'debtorClientId' => $this->getDebtorClient()->getId(),
-            'issuanceDate' => $this->getIssuanceDate(),
-            'dueDate' => $this->getDueDate(),
-            'dateWithdrew' => $this->getDateWithdrew(),
+            'creditCardBillId' => $this->getCreditCardBill()?->getId(),
+            'splitEntryId' => $this->getSplitEntry()?->getId(),
+            'debtorClientId' => $this->getDebtorClient()?->getId(),
+            'issuanceDate' => date_format($this->getIssuanceDate(),"Y-m-d"),
+            'dueDate' => date_format($this->getDueDate(),"Y-m-d"),
+            'dateWithdrew' => ($this->getDateWithdrew() == null) ? null : date_format($this->getDateWithdrew(),"Y-m-d"),
             'amount' => $this->getAmount(),
             'debitedAmount' => $this->getDebitedAmount(),
             'typeEntry' => $this->getTypeEntry()

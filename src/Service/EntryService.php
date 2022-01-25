@@ -52,8 +52,7 @@ class EntryService implements EntityFactoryInterface
         $status = $this->getStatus($objetoJson->statusId);
         $banckAccount = $this->getBankAccount($objetoJson->bankAccountId);
         $category = $this->getCategory($objetoJson->categoryId);
-        $payment = $this->getPayment($objetoJson->paymentId);
-        $creditCardBill = $this->getCreditCardBill($objetoJson->creditCardBillId);
+        $payment = $this->getPayment($objetoJson->paymentId);        
 
         $entity = new Entry();
         $entity->setClient($client)
@@ -61,21 +60,28 @@ class EntryService implements EntityFactoryInterface
                ->setBankAccount($banckAccount)
                ->setCategory($category)
                ->setPayment($payment)
-               ->setCreditCardBill($creditCardBill)
-               ->setIssuanceDate($objetoJson->issuanceDate)
-               ->setDueDate($objetoJson->dueDate)
-               ->setDateWithdrew($objetoJson->dateWithdrew)
+               ->setIssuanceDate(\DateTime::createFromFormat("Y-m-d", $objetoJson->dueDate))
+               ->setDueDate(\DateTime::createFromFormat("Y-m-d",$objetoJson->dueDate))
                ->setAmount($objetoJson->amount)
                ->setDebitedAmount($objetoJson->debitedAmount)
                ->setTypeEntry($objetoJson->typeEntry)
                ->setActive(true);
+
+        if($objetoJson->creditCardBillId > 0){
+            $creditCardBill = $this->getCreditCardBill($objetoJson->creditCardBillId);
+            $entity->setCreditCardBill($creditCardBill);
+        }
+
+        if($objetoJson->dateWithdrew != ""){
+            $entity->setDateWithdrew($objetoJson->dateWithdrew);
+        }
 
         return $entity;
     }
 
     private function getClient(int $userId): Client
     {
-        $client = $this->clientRepository->findBy(array('User' => $userId));
+        $client = $this->clientRepository->findBy(array('user' => $userId));
         if (count($client) <= 0) {
             throw new EntityFactoryException("User doesn't have a client registered");
         }
@@ -95,9 +101,6 @@ class EntryService implements EntityFactoryInterface
 
     private function getBankAccount(int $id): BankAccount
     {
-        if($id == 0)
-            return null;
-
         $client = $this->bankAccountRepository->findBy(array('id' => $id));
         if (count($client) <= 0) {
             throw new EntityFactoryException("Bank account doesn't exist");
@@ -128,9 +131,6 @@ class EntryService implements EntityFactoryInterface
 
     private function getCreditCardBill(int $id): CreditCardBill
     {
-        if($id == 0)
-            return null;
-
         $client = $this->creditCardBillRepository->findBy(array('id' => $id));
         if (count($client) <= 0) {
             throw new EntityFactoryException("Credit card doesn't exist");
