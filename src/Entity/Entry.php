@@ -302,6 +302,7 @@ class Entry implements \JsonSerializable
         return [
             'id' => $this->getId(),
             'statusId' => $this->getStatus()->getId(),
+            'statusName' => $this->getStatus()->getName(),
             'bankAccountId' => $this->getBankAccount()->getId(),
             'bankAccouuntName' => $this->getBankAccount()->getName(),
             'recurringEntryId' => $this->getRecurringEntry()?->getId(),

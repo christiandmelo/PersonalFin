@@ -506,6 +506,86 @@ paths:
           content:
             text:
               example: 1
+              
+  /entry:
+    post:
+      summary: Create new entry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EntryEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EntryQuery"
+  /entries:
+    get:
+      summary: Get all entries
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  page:
+                    type: integer
+                  itemsPerPage:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/EntryQuery"
+  /entry/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Get entry by id
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: 
+                    type: boolean
+                  data:
+                    $ref: "#/components/schemas/EntryQuery"
+    put:
+      summary: Edit entry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EntryEdit"
+      responses:
+        201:
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EntryQuery"
+    delete:
+      summary: Delete entry
+      responses:
+        201:
+          description: "Success"
+          content:
+            text:
+              example: 1
 security: 
 - auth: []
 components:
@@ -635,6 +715,83 @@ components:
           type: boolean
         displayInSummary:
           type: boolean
+          
+    EntryQuery:
+      type: object
+      properties:
+        id:
+          type: integer
+        statusId:
+          type: integer
+        statusName:
+          type: string
+        bankAccountId: 
+          type: string
+        bankAccouuntName:
+          type: string
+        recurringEntryId:
+          type: integer
+        categoryId:
+          type: integer
+        categoryName:
+          type: string
+        paymentId:
+          type: integer
+        paymentName:
+          type: string
+        creditCardBillId:
+          type: integer
+        splitEntryId:
+          type: integer
+        debtorClientId:
+          type: integer
+        debtorClientName:
+          type: string
+        issuanceDate:
+          type: string
+        dueDate:
+          type: string
+        dateWithdrew:
+          type: string
+        amount:
+          type: number
+        debitedAmount:
+          type: number
+        typeEntry:
+          type: integer
+    EntryEdit:
+      type: object
+      properties:
+        id:
+          type: integer
+        statusId:
+          type: integer
+        bankAccountId: 
+          type: string
+        recurringEntryId:
+          type: integer
+        categoryId:
+          type: integer
+        paymentId:
+          type: integer
+        creditCardBillId:
+          type: integer
+        splitEntryId:
+          type: integer
+        debtorClientId:
+          type: integer
+        issuanceDate:
+          type: string
+        dueDate:
+          type: string
+        dateWithdrew:
+          type: string
+        amount:
+          type: number
+        debitedAmount:
+          type: number
+        typeEntry:
+          type: integer
   securitySchemes:
     auth:
       type: http
