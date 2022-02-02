@@ -198,6 +198,11 @@ entries:
   methods:
     - GET
   controller: App\Controller\EntryController::getAll
+entriesDate:
+  path: /entries/byDate
+  methods:
+    - GET
+  controller: App\Controller\EntryController::getByDate
 entry:
   path: /entry/{id}
   methods:

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Entry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\DBAL\Logging\DebugStack;
 
 /**
  * @method Entry|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,5 +18,28 @@ class EntryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Entry::class);
+    }
+
+    public function getByDate(int $typeEntry, string $issuancDate, int $limit, int $firstResult){
+        $debugStack = new DebugStack();
+        $entityManager = $this->getEntityManager();
+        $entityManager->getConfiguration()->setSQLLogger($debugStack);
+
+        $entry = Entry::class;
+        $dql = "SELECT entry, bankAccount, status, category, payment, debtorClient
+                FROM $entry entry 
+                JOIN entry.bankAccount bankAccount 
+                JOIN entry.status status
+                JOIN entry.category category
+                JOIN entry.payment payment
+                LEFT JOIN entry.debtorClient debtorClient
+                WHERE entry.typeEntry = {$typeEntry}
+                    AND entry.issuanceDate >= '{$issuancDate} 00:00:00'
+                    AND entry.issuanceDate <= '{$issuancDate} 23:59:59'";
+
+        $query = $entityManager->createQuery($dql)->setFirstResult( $firstResult )->setMaxResults( $limit );
+        $entries = $query->getResult();
+
+        return $entries;
     }
 }
