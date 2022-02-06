@@ -34,7 +34,7 @@ class EntryController extends BaseController
         );
     }
 
-    public function getByDate(Request $request): Response
+    public function getByDate(string $dtBegin, string $dtEnd, Request $request): Response
     {
         try {
             $filterData = $this->requestDataExtractor->getFilterData($request);
@@ -43,8 +43,9 @@ class EntryController extends BaseController
             $itemsPerPage = $_ENV['ITEMS_PER_PAGE'] ?? 10;
             
             $entityList = $this->repository->getByDate(
+                $dtBegin,
+                $dtEnd,
                 $filterData["typeEntry"], 
-                $filterData["issuanceDate"], 
                 $itemsPerPage,
                 $paginationData * $itemsPerPage
             );

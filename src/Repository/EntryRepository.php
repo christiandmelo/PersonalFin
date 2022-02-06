@@ -20,7 +20,7 @@ class EntryRepository extends ServiceEntityRepository
         parent::__construct($registry, Entry::class);
     }
 
-    public function getByDate(int $typeEntry, string $issuancDate, int $limit, int $firstResult){
+    public function getByDate(string $dtBegin, string $dtEnd, int $typeEntry, int $limit, int $firstResult){
         $debugStack = new DebugStack();
         $entityManager = $this->getEntityManager();
         $entityManager->getConfiguration()->setSQLLogger($debugStack);
@@ -34,8 +34,8 @@ class EntryRepository extends ServiceEntityRepository
                 JOIN entry.payment payment
                 LEFT JOIN entry.debtorClient debtorClient
                 WHERE entry.typeEntry = {$typeEntry}
-                    AND entry.issuanceDate >= '{$issuancDate} 00:00:00'
-                    AND entry.issuanceDate <= '{$issuancDate} 23:59:59'";
+                    AND entry.issuanceDate >= '{$dtBegin} 00:00:00'
+                    AND entry.issuanceDate <= '{$dtEnd} 23:59:59'";
 
         $query = $entityManager->createQuery($dql)->setFirstResult( $firstResult )->setMaxResults( $limit );
         $entries = $query->getResult();

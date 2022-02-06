@@ -199,7 +199,7 @@ entries:
     - GET
   controller: App\Controller\EntryController::getAll
 entriesDate:
-  path: /entries/byDate
+  path: /entries/byDate/{dtBegin}/{dtEnd}
   methods:
     - GET
   controller: App\Controller\EntryController::getByDate
