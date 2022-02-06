@@ -25,6 +25,10 @@ class EntryRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         $entityManager->getConfiguration()->setSQLLogger($debugStack);
 
+        $whereType = "";
+        if($typeEntry >= 0)
+            $whereType = " AND entry.typeEntry = {$typeEntry}";
+
         $entry = Entry::class;
         $dql = "SELECT entry, bankAccount, status, category, payment, debtorClient
                 FROM $entry entry 
@@ -33,9 +37,9 @@ class EntryRepository extends ServiceEntityRepository
                 JOIN entry.category category
                 JOIN entry.payment payment
                 LEFT JOIN entry.debtorClient debtorClient
-                WHERE entry.typeEntry = {$typeEntry}
-                    AND entry.issuanceDate >= '{$dtBegin} 00:00:00'
-                    AND entry.issuanceDate <= '{$dtEnd} 23:59:59'";
+                WHERE entry.issuanceDate >= '{$dtBegin} 00:00:00'
+                    AND entry.issuanceDate <= '{$dtEnd} 23:59:59'
+                    {$whereType}";
 
         $query = $entityManager->createQuery($dql)->setFirstResult( $firstResult )->setMaxResults( $limit );
         $entries = $query->getResult();
