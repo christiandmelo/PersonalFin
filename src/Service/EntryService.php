@@ -50,6 +50,8 @@ class EntryService implements EntityFactoryInterface
     public function getResume(string $dtBegin, string $dtEnd)
     {
         $arrRet["currentBalance"] = "0.00";
+        $arrRet["percentCurrentBalance"] = "0.00";
+        $arrRet["positiveCurrentBalance"] = true;
         $incomes = (float)0;
         $expenses = (float)0;
         //Currently month
@@ -97,8 +99,11 @@ class EntryService implements EntityFactoryInterface
         $arrRet["percentMonthBalance"] = $this->getPercentBetweenTwoValues($previousMonthBalance, $monthBalance);
         
         $arrRet["incomes"] = number_format($incomes, 2, '.');
+        $arrRet["positiveIncomes"] = ($incomes >= 0)? true : false;
         $arrRet["expenses"] = number_format($expenses, 2, '.');
+        $arrRet["positiveExpenses"] = ($expenses >= 0)? true : false;
         $arrRet["monthBalance"] = number_format($monthBalance, 2, '.');
+        $arrRet["positiveMonthBalance"] = ($monthBalance >= 0)? true : false;
 
         return $arrRet;
     }
