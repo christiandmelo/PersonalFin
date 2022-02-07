@@ -46,4 +46,16 @@ class EntryRepository extends ServiceEntityRepository
 
         return $entries;
     }
+
+    public function getResume(string $dtBegin, string $dtEnd){
+        $query = $this->createQueryBuilder(alias: 'e')
+            ->where("e.issuanceDate >= '{$dtBegin} 00:00:00' 
+                        AND e.issuanceDate <= '{$dtEnd} 23:59:59'")
+            ->groupBy("e.client", "e.typeEntry")
+            ->select(" e.typeEntry,
+                        SUM(e.amount) AS total")
+            ->getquery();
+
+        return $query->getResult();
+    }
 }

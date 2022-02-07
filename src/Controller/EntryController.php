@@ -15,6 +15,7 @@ use Psr\Log\LoggerInterface;
 
 class EntryController extends BaseController
 {
+    private $entryService;
 
     public function __construct(
         EntryService $entryService,
@@ -32,6 +33,8 @@ class EntryController extends BaseController
             $logger,
             $clientRepository
         );
+
+        $this->entryService = $entryService;
     }
 
     public function getByDate(string $dtBegin, string $dtEnd, Request $request): Response
@@ -57,6 +60,25 @@ class EntryController extends BaseController
 
         return $hypermidiaResponse->getResponse();
         
+    }
+
+    public function getResume(string $dtBegin, string $dtEnd, Request $request): Response
+    {
+        try {
+            $entityList = $this->entryService->getResume(
+                $dtBegin,
+                $dtEnd,
+            );
+
+            //var_dump($entityList);
+            //die("eita");
+
+            $hypermidiaResponse = new HypermidiaResponse($entityList, true, Response::HTTP_OK);
+        } catch (\Throwable $erro) {
+            $hypermidiaResponse = HypermidiaResponse::fromError($erro);
+        }
+
+        return $hypermidiaResponse->getResponse();
     }
 
     public function updateExistingEntity(int $id, $entity)

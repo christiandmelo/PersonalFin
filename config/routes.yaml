@@ -203,6 +203,11 @@ entriesDate:
   methods:
     - GET
   controller: App\Controller\EntryController::getByDate
+entriesResume:
+  path: /entries/resume/{dtBegin}/{dtEnd}
+  methods:
+    - GET
+  controller: App\Controller\EntryController::getResume
 entry:
   path: /entry/{id}
   methods:

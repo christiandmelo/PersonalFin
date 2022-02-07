@@ -17,9 +17,11 @@ use App\Repository\BankAccountRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\PaymentRepository;
 use App\Repository\CreditCardBillRepository;
+use App\Repository\EntryRepository;
 
 class EntryService implements EntityFactoryInterface
 {
+    private $entryRepository;
     private $clientRepository;
     private $statusRepository;
     private $bankAccountRepository;
@@ -28,6 +30,7 @@ class EntryService implements EntityFactoryInterface
     private $creditCardBillRepository;
 
     public function __construct(
+        EntryRepository $entryRepository,
         ClientRepository $clientRepository,
         StatusRepository $statusRepository,
         BankAccountRepository $bankAccountRepository,
@@ -35,12 +38,69 @@ class EntryService implements EntityFactoryInterface
         PaymentRepository $paymentRepository,
         CreditCardBillRepository $creditCardBillRepository)
     {
+        $this->entryRepository = $entryRepository;
         $this->clientRepository = $clientRepository;
         $this->statusRepository = $statusRepository;
         $this->bankAccountRepository = $bankAccountRepository;
         $this->categoryRepository = $categoryRepository;
         $this->paymentReporitory = $paymentRepository;
         $this->creditCardBillRepository = $creditCardBillRepository;
+    }
+
+    public function getResume(string $dtBegin, string $dtEnd)
+    {
+        $arrRet["currentBalance"] = "0.00";
+        $incomes = (float)0;
+        $expenses = (float)0;
+        //Currently month
+        $arrCurrentResume = $this->entryRepository->getResume($dtBegin, $dtEnd);
+        foreach ($arrCurrentResume as $value) {
+            if(!isset($value["typeEntry"]))
+                continue;
+            
+            if($value["typeEntry"] == 1){
+                $incomes = (float)$value["total"];
+                continue;
+            }
+
+            if($value["typeEntry"] == 2)
+                $expenses = (float)$value["total"];
+        }
+        $monthBalance = $incomes - $expenses;
+
+        //previous month
+        $previousDtBegin = \DateTime::createFromFormat("Y-m-d", $dtBegin)->modify('-1 month')->format('Y-m-d');
+        $previousDtEnd = \DateTime::createFromFormat("Y-m-d", $dtEnd)->modify('-1 month')->format('Y-m-d');
+        $previousIncome = 0;
+        $previousExpense = 0;
+        $arrPreviousResume = $this->entryRepository->getResume($previousDtBegin, $previousDtEnd);
+        foreach ($arrPreviousResume as $value) {
+            if(!isset($value["typeEntry"]))
+                continue;
+            
+            if($value["typeEntry"] == 1){
+                $previousIncome = (float)$value["total"];
+                continue;
+            }
+
+            if($value["typeEntry"] == 2)
+            $previousExpense = (float)$value["total"];
+        }
+        $previousMonthBalance = $previousIncome-$previousExpense;
+
+        $arrRet["PreviousIncome"] = number_format($previousIncome, 2, '.');
+        $arrRet["PreviousExpense"] = number_format($previousExpense, 2, '.');
+        $arrRet["PreviousMonthBalance"] = number_format($previousMonthBalance, 2, '.');
+
+        $arrRet["percentIncomes"] = $this->getPercentBetweenTwoValues($previousIncome, $incomes);
+        $arrRet["percentExpenses"] = $this->getPercentBetweenTwoValues($previousExpense, $expenses);
+        $arrRet["percentMonthBalance"] = $this->getPercentBetweenTwoValues($previousMonthBalance, $monthBalance);
+        
+        $arrRet["incomes"] = number_format($incomes, 2, '.');
+        $arrRet["expenses"] = number_format($expenses, 2, '.');
+        $arrRet["monthBalance"] = number_format($monthBalance, 2, '.');
+
+        return $arrRet;
     }
 
     public function createEntity(string $json, int $userId, bool $insert): Entry
@@ -60,7 +120,7 @@ class EntryService implements EntityFactoryInterface
                ->setBankAccount($banckAccount)
                ->setCategory($category)
                ->setPayment($payment)
-               ->setIssuanceDate(\DateTime::createFromFormat("Y-m-d", $objetoJson->dueDate))
+               ->setIssuanceDate(\DateTime::createFromFormat("Y-m-d", $objetoJson->issuanceDate))
                ->setDueDate(\DateTime::createFromFormat("Y-m-d",$objetoJson->dueDate))
                ->setAmount($objetoJson->amount)
                ->setDebitedAmount($objetoJson->debitedAmount)
@@ -164,5 +224,27 @@ class EntryService implements EntityFactoryInterface
         if (!property_exists($objetoJson, 'typeEntry')) {
             throw new EntityFactoryException('Entry needs a type');
         }
+    }
+
+    private function getPercentBetweenTwoValues(float $previousValue, float $currentValue)
+    {
+        if(($previousValue > 0 && $currentValue > 0)
+            || ($previousValue < 0 && $currentValue > 0)
+            || ($previousValue < 0 && $currentValue < 0)
+        )
+        {
+            $value = (($previousValue - $currentValue)/$previousValue)*100;
+            return number_format($value, 2, '.');
+        }
+
+        if($previousValue == 0 && $currentValue < 0)
+            return -100;
+
+        if($previousValue == 0 && $currentValue > 0)
+            return 100;
+
+        if($previousValue == 0 && $currentValue == 0)
+            return 0;
+
     }
 }
