@@ -89,21 +89,41 @@ class EntryService implements EntityFactoryInterface
             $previousExpense = (float)$value["total"];
         }
         $previousMonthBalance = $previousIncome-$previousExpense;
+        $diffIncomes = $incomes-($previousIncome);
+        $diffExpenses = $expenses-($previousExpense);
+        $diffMonthBalance = $monthBalance-($previousMonthBalance);
 
-        $arrRet["PreviousIncome"] = number_format($previousIncome, 2, '.');
-        $arrRet["PreviousExpense"] = number_format($previousExpense, 2, '.');
-        $arrRet["PreviousMonthBalance"] = number_format($previousMonthBalance, 2, '.');
-
-        $arrRet["percentIncomes"] = $this->getPercentBetweenTwoValues($previousIncome, $incomes);
-        $arrRet["percentExpenses"] = $this->getPercentBetweenTwoValues($previousExpense, $expenses);
-        $arrRet["percentMonthBalance"] = $this->getPercentBetweenTwoValues($previousMonthBalance, $monthBalance);
         
+        $arrRet["previousIncome"] = number_format($previousIncome, 2, '.');
+        $arrRet["previousExpense"] = number_format($previousExpense, 2, '.');
+        $arrRet["previousMonthBalance"] = number_format($previousMonthBalance, 2, '.');
         $arrRet["incomes"] = number_format($incomes, 2, '.');
-        $arrRet["positiveIncomes"] = ($incomes >= 0)? true : false;
         $arrRet["expenses"] = number_format($expenses, 2, '.');
-        $arrRet["positiveExpenses"] = ($expenses >= 0)? true : false;
         $arrRet["monthBalance"] = number_format($monthBalance, 2, '.');
-        $arrRet["positiveMonthBalance"] = ($monthBalance >= 0)? true : false;
+        $arrRet["diffIncomes"] = number_format($diffIncomes, 2, '.');
+        $arrRet["diffExpenses"] = number_format($diffExpenses, 2, '.');
+        $arrRet["diffMonthBalance"] = number_format($diffMonthBalance, 2, '.');
+        $arrRet["positiveIncomes"] = true; 
+        $arrRet["positiveExpenses"] = true; 
+        $arrRet["positiveMonthBalance"] = true; 
+
+        if($diffIncomes < 0)
+        {
+            //$arrRet["diffIncomes"] = number_format($diffIncomes*-1, 2, '.');
+            $arrRet["positiveIncomes"] = false; 
+        }
+
+        if($diffExpenses < 0)
+        {
+            //$arrRet["diffExpenses"] = number_format($diffExpenses*-1, 2, '.');
+            $arrRet["positiveExpenses"] = false; 
+        }
+
+        if($diffMonthBalance < 0)
+        {
+            //$arrRet["diffMonthBalance"] = number_format($diffMonthBalance*-1, 2, '.');
+            $arrRet["positiveMonthBalance"] = false; 
+        }
 
         return $arrRet;
     }
@@ -229,27 +249,5 @@ class EntryService implements EntityFactoryInterface
         if (!property_exists($objetoJson, 'typeEntry')) {
             throw new EntityFactoryException('Entry needs a type');
         }
-    }
-
-    private function getPercentBetweenTwoValues(float $previousValue, float $currentValue)
-    {
-        if(($previousValue > 0 && $currentValue > 0)
-            || ($previousValue < 0 && $currentValue > 0)
-            || ($previousValue < 0 && $currentValue < 0)
-        )
-        {
-            $value = (($previousValue - $currentValue)/$previousValue)*100;
-            return number_format($value, 2, '.');
-        }
-
-        if($previousValue == 0 && $currentValue < 0)
-            return -100;
-
-        if($previousValue == 0 && $currentValue > 0)
-            return 100;
-
-        if($previousValue == 0 && $currentValue == 0)
-            return 0;
-
     }
 }
