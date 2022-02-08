@@ -109,19 +109,19 @@ class EntryService implements EntityFactoryInterface
 
         if($diffIncomes < 0)
         {
-            //$arrRet["diffIncomes"] = number_format($diffIncomes*-1, 2, '.');
+            $arrRet["diffIncomes"] = number_format($diffIncomes*-1, 2, '.');
             $arrRet["positiveIncomes"] = false; 
         }
 
         if($diffExpenses < 0)
         {
-            //$arrRet["diffExpenses"] = number_format($diffExpenses*-1, 2, '.');
+            $arrRet["diffExpenses"] = number_format($diffExpenses*-1, 2, '.');
             $arrRet["positiveExpenses"] = false; 
         }
 
         if($diffMonthBalance < 0)
         {
-            //$arrRet["diffMonthBalance"] = number_format($diffMonthBalance*-1, 2, '.');
+            $arrRet["diffMonthBalance"] = number_format($diffMonthBalance*-1, 2, '.');
             $arrRet["positiveMonthBalance"] = false; 
         }
 
